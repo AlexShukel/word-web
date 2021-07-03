@@ -1,8 +1,14 @@
-import { app, BrowserWindow } from "electron";
+import { join } from "path";
+
+import { app, BrowserWindow, ipcMain } from "electron";
 
 let win: BrowserWindow | null = null;
 const createWindow = () => {
-    win = new BrowserWindow({});
+    win = new BrowserWindow({
+        webPreferences: {
+            preload: join(__dirname, "./preload.js"),
+        },
+    });
 
     win.loadURL("http://localhost:8080/");
 
@@ -11,7 +17,12 @@ const createWindow = () => {
     });
 };
 
-app.on("ready", createWindow);
+app.on("ready", () => {
+    createWindow();
+    ipcMain.on("test", (e) => {
+        console.log(e);
+    });
+});
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
