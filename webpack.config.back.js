@@ -3,7 +3,26 @@ const { resolvePath } = require("./webpack.utils");
 /**
  * @type {import('webpack').Configuration}
  */
-const config = {
+const preloadConfig = {
+    target: "electron-main",
+    entry: resolvePath("src", "backend", "preload.ts"),
+    output: {
+        path: resolvePath("build", "back"),
+        filename: "preload.js",
+    },
+    resolve: {
+        extensions: [".ts"],
+    },
+    mode: "development",
+    module: {
+        rules: [{ test: /\.ts$/, loader: "ts-loader" }],
+    },
+};
+
+/**
+ * @type {import('webpack').Configuration}
+ */
+const mainConfig = {
     target: "electron-main",
     entry: resolvePath("src", "backend", "main.ts"),
     output: {
@@ -19,4 +38,4 @@ const config = {
     },
 };
 
-module.exports = config;
+module.exports = [preloadConfig, mainConfig];
