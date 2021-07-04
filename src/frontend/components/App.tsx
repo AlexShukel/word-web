@@ -1,12 +1,24 @@
 import React from "react";
 
+import { Button, ChakraProvider, extendTheme } from "@chakra-ui/react";
+
+import { WordWebFormPopup } from "./popups/WordWebFormPopup";
 import { WordsContextLoader } from "./WordsContext";
+import { theme } from "../theme";
 
 export const App = () => {
     return (
-        <WordsContextLoader>
-            <div>hello</div>
-            <button onClick={() => window.electron.test()}>test ipcMain</button>
-        </WordsContextLoader>
+        <ChakraProvider theme={extendTheme(theme)}>
+            <WordsContextLoader>
+                <div>
+                    <WordWebFormPopup
+                        onSubmit={(values) => console.log(values)}
+                        toggler={(onOpen) => (
+                            <Button onClick={onOpen}>ADD NEW WORD-WEB</Button>
+                        )}
+                    />
+                </div>
+            </WordsContextLoader>
+        </ChakraProvider>
     );
 };
