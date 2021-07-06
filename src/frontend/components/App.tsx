@@ -32,9 +32,7 @@ export const App = () => {
                             title: "Word-Web component form",
                         }}
                     >
-                        {(_formikProps, initialFocusRef) => (
-                            <WordWebForm initialFocusRef={initialFocusRef} />
-                        )}
+                        <WordWebForm />
                     </FormPopup>
                 </div>
             </WordsContextLoader>
