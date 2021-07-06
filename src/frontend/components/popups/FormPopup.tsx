@@ -1,19 +1,14 @@
-import React, { useRef } from "react";
+import React from "react";
 
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
-import { Form, Formik, FormikConfig, FormikProps } from "formik";
+import { Form, Formik, FormikConfig } from "formik";
 
 import { ChakraPopup, ChakraPopupProps } from "./ChakraPopup";
 import { PopupButtons } from "./PopupButtons";
-import { FocusableElement } from "../../types/FocusableElement";
 import { PopupButton } from "../../types/PopupButton";
 
 type FormPopupProps<T> = {
     chakraPopupProps: Omit<ChakraPopupProps, "children">;
-    children: (
-        props: FormikProps<T>,
-        ref: React.RefObject<FocusableElement | null>
-    ) => React.ReactNode;
 } & FormikConfig<T>;
 
 const defaultFormPopupButtons: PopupButton[] = [
@@ -32,19 +27,15 @@ export const FormPopup = <T,>({
     children,
     ...formikProps
 }: FormPopupProps<T>) => {
-    const initialFocusRef = useRef<FocusableElement | null>(null);
-
     return (
-        <ChakraPopup
-            {...chakraPopup}
-            initialFocusRef={initialFocusRef}
-            renderMainLayout={false}
-        >
+        <ChakraPopup {...chakraPopup} renderMainLayout={false}>
             <Formik {...formikProps}>
                 {(props) => (
                     <Form>
                         <ModalBody>
-                            {children(props, initialFocusRef)}
+                            {typeof children === "function"
+                                ? children(props)
+                                : children}
                         </ModalBody>
                         <ModalFooter>
                             <PopupButtons buttons={buttons} />

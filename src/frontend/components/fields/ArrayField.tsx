@@ -21,7 +21,10 @@ export const ArrayField = <T,>({ name }: ArrayFieldProps) => {
                     {value.map((_, index) => (
                         <GridItem key={index}>
                             <HStack>
-                                <StyledField name={`${name}.${index}`} />
+                                <StyledField
+                                    autoFocus={index === value.length - 1}
+                                    name={`${name}.${index}`}
+                                />
                                 <IconButton
                                     colorScheme="red"
                                     variant="outline"
