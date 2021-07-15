@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 
 import { Api } from "../shared/Api";
 
-const electron: Api = {
+const api: Api = {
     writeData: (data) => {
         ipcRenderer.send("writeData", data);
     },
@@ -11,4 +11,4 @@ const electron: Api = {
     },
 };
 
-contextBridge.exposeInMainWorld("electron", electron);
+contextBridge.exposeInMainWorld("api", api);
