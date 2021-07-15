@@ -7,7 +7,7 @@ const api: Api = {
         ipcRenderer.send("writeData", data);
     },
     getData: () => {
-        ipcRenderer.send("getData");
+        return ipcRenderer.invoke("getData");
     },
 };
 
