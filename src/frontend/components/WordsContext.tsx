@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 
-import { AppData } from "../types/AppData";
+import { AppData } from "../../shared/AppData";
 
 type WordsContextType = AppData;
 

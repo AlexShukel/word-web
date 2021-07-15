@@ -2,6 +2,8 @@ import { join } from "path";
 
 import { app, BrowserWindow, ipcMain } from "electron";
 
+import { AppData } from "../shared/AppData";
+
 let win: BrowserWindow | null = null;
 const createWindow = () => {
     win = new BrowserWindow({
@@ -19,7 +21,12 @@ const createWindow = () => {
 
 app.on("ready", () => {
     createWindow();
-    ipcMain.on("test", (e) => {
+
+    ipcMain.on("writeData", (_e, data: AppData) => {
+        console.log(data);
+    });
+
+    ipcMain.on("getData", (e) => {
         console.log(e);
     });
 });

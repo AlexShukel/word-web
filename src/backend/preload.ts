@@ -3,8 +3,11 @@ import { contextBridge, ipcRenderer } from "electron";
 import { Api } from "../shared/Api";
 
 const electron: Api = {
-    test: () => {
-        ipcRenderer.send("test");
+    writeData: (data) => {
+        ipcRenderer.send("writeData", data);
+    },
+    getData: () => {
+        ipcRenderer.send("getData");
     },
 };
 

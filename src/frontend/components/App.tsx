@@ -5,8 +5,8 @@ import { Button, ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { WordWebForm } from "./forms/WordWebForm";
 import { FormPopup } from "./popups/FormPopup";
 import { WordsContextLoader } from "./WordsContext";
+import { WordDef } from "../../shared/WordDef";
 import { theme } from "../theme";
-import { WordDef } from "../types/WordDef";
 
 export const App = () => {
     return (
