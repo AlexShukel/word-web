@@ -1,3 +1,3 @@
-export type Electron = {
+export type Api = {
     test: () => void;
 };

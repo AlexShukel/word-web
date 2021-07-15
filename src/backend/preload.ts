@@ -1,8 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 
-import { Electron } from "../shared/Electron";
+import { Api } from "../shared/Api";
 
-const electron: Electron = {
+const electron: Api = {
     test: () => {
         ipcRenderer.send("test");
     },
