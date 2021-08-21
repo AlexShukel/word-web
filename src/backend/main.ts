@@ -1,6 +1,12 @@
-import { join } from "path";
+import fs from "fs";
+import { join, resolve } from "path";
+import util from "util";
 
 import { app, BrowserWindow, ipcMain } from "electron";
+
+import { AppData } from "../shared/AppData";
+
+const readFile = util.promisify(fs.readFile);
 
 let win: BrowserWindow | null = null;
 const createWindow = () => {
@@ -18,10 +24,22 @@ const createWindow = () => {
 };
 
 app.on("ready", () => {
-    createWindow();
-    ipcMain.on("test", (e) => {
-        console.log(e);
+    ipcMain.on("writeData", (_e, data: AppData) => {
+        fs.writeFile(
+            resolve(__dirname, "hello-test.json"),
+            JSON.stringify(data),
+            (err) => {
+                if (err) console.error(err);
+            }
+        );
     });
+
+    ipcMain.handle("getData", async () => {
+        const result = await readFile(resolve(__dirname, "hello-test.json"));
+        return JSON.parse(result.toString());
+    });
+
+    createWindow();
 });
 
 app.on("window-all-closed", () => {

@@ -1,3 +1,6 @@
+import { AppData } from "./AppData";
+
 export type Api = {
-    test: () => void;
+    writeData: (data: AppData) => void;
+    getData: () => Promise<AppData>;
 };
