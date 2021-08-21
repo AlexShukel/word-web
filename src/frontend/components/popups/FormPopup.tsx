@@ -1,15 +1,18 @@
 import React from "react";
 
 import { ModalBody, ModalFooter } from "@chakra-ui/react";
-import { Form, Formik, FormikConfig } from "formik";
+import ReactiveForm, { FormConfig } from "@reactive-forms/core";
+import { Form } from "@reactive-forms/dom";
 
 import { ChakraPopup, ChakraPopupProps } from "./ChakraPopup";
 import { PopupButtons } from "./PopupButtons";
 import { PopupButton } from "../../types/PopupButton";
 
-type FormPopupProps<T> = {
-    chakraPopupProps: Omit<ChakraPopupProps, "children">;
-} & FormikConfig<T>;
+type FormPopupProps<T extends object> = React.PropsWithChildren<
+    {
+        chakraPopupProps: Omit<ChakraPopupProps, "children">;
+    } & FormConfig<T>
+>;
 
 const defaultFormPopupButtons: PopupButton[] = [
     {
@@ -22,19 +25,19 @@ const defaultFormPopupButtons: PopupButton[] = [
     { title: "SUBMIT", type: "submit", closeOnClick: true },
 ];
 
-export const FormPopup = <T,>({
+export const FormPopup = <T extends object>({
     chakraPopupProps: { buttons = defaultFormPopupButtons, ...chakraPopup },
     children,
-    ...formikProps
+    ...formProps
 }: FormPopupProps<T>) => {
     return (
         <ChakraPopup {...chakraPopup} renderMainLayout={false}>
-            <Formik {...formikProps}>
-                {(props) => (
+            <ReactiveForm {...formProps}>
+                {() => (
                     <Form>
                         <ModalBody>
                             {typeof children === "function"
-                                ? children(props)
+                                ? children()
                                 : children}
                         </ModalBody>
                         <ModalFooter>
@@ -42,7 +45,7 @@ export const FormPopup = <T,>({
                         </ModalFooter>
                     </Form>
                 )}
-            </Formik>
+            </ReactiveForm>
         </ChakraPopup>
     );
 };
