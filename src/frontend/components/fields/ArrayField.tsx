@@ -7,14 +7,13 @@ import { FieldArray } from "@reactive-forms/dom";
 
 import { StyledField } from "./StyledField";
 
-type ArrayFieldProps<T> = {
+type ArrayFieldProps = {
     name: string;
-    emptyValue: T;
 };
 
-export const ArrayField = <T,>({ name, emptyValue }: ArrayFieldProps<T>) => {
+export const ArrayField = ({ name }: ArrayFieldProps) => {
     return (
-        <FieldArray<T> name={name}>
+        <FieldArray<string> name={name}>
             {({ items, removeAt, push }) => (
                 <Grid gap={2}>
                     {items.map((_, index) => (
@@ -42,7 +41,7 @@ export const ArrayField = <T,>({ name, emptyValue }: ArrayFieldProps<T>) => {
                             leftIcon={<AddIcon />}
                             isFullWidth
                             onClick={() => {
-                                push(emptyValue);
+                                push("");
                             }}
                         >
                             ADD

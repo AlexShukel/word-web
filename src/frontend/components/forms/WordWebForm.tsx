@@ -18,15 +18,15 @@ export const WordWebForm = () => {
             </GridLabel>
 
             <GridLabel label="synonyms" placement="top">
-                <ArrayField name="synonyms" emptyValue="" />
+                <ArrayField name="synonyms" />
             </GridLabel>
 
             <GridLabel label="antonyms" placement="top">
-                <ArrayField name="antonyms" emptyValue="" />
+                <ArrayField name="antonyms" />
             </GridLabel>
 
             <GridLabel label="idioms" placement="top">
-                <ArrayField name="idioms" emptyValue="" />
+                <ArrayField name="idioms" />
             </GridLabel>
         </Grid>
     );
