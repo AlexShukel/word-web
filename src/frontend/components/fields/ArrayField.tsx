@@ -3,26 +3,25 @@ import React from "react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { Grid, GridItem, HStack } from "@chakra-ui/layout";
 import { Button, IconButton } from "@chakra-ui/react";
-import { FieldArray, useField } from "formik";
+import { FieldArray } from "@reactive-forms/dom";
 
 import { StyledField } from "./StyledField";
 
-type ArrayFieldProps = {
+type ArrayFieldProps<T> = {
     name: string;
+    emptyValue: T;
 };
 
-export const ArrayField = <T,>({ name }: ArrayFieldProps) => {
-    const [{ value }] = useField<T[]>(name);
-
+export const ArrayField = <T,>({ name, emptyValue }: ArrayFieldProps<T>) => {
     return (
-        <FieldArray name={name}>
-            {(arrayHelpers) => (
+        <FieldArray<T> name={name}>
+            {({ items, removeAt, push }) => (
                 <Grid gap={2}>
-                    {value.map((_, index) => (
+                    {items.map((_, index) => (
                         <GridItem key={index}>
                             <HStack>
                                 <StyledField
-                                    autoFocus={index === value.length - 1}
+                                    autoFocus={index === items.length - 1}
                                     name={`${name}.${index}`}
                                 />
                                 <IconButton
@@ -31,7 +30,7 @@ export const ArrayField = <T,>({ name }: ArrayFieldProps) => {
                                     aria-label="Delete item"
                                     icon={<DeleteIcon />}
                                     onClick={() => {
-                                        arrayHelpers.remove(index);
+                                        removeAt(index);
                                     }}
                                 />
                             </HStack>
@@ -43,7 +42,7 @@ export const ArrayField = <T,>({ name }: ArrayFieldProps) => {
                             leftIcon={<AddIcon />}
                             isFullWidth
                             onClick={() => {
-                                arrayHelpers.push("");
+                                push(emptyValue);
                             }}
                         >
                             ADD

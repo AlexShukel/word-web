@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 
-import { Input, Textarea } from "@chakra-ui/react";
-import { Field, FieldProps } from "formik";
+import { Input, Textarea, TextareaProps } from "@chakra-ui/react";
+import { useTextField } from "@reactive-forms/dom";
 
 import { FocusableElement } from "../../types/FocusableElement";
 
@@ -18,25 +18,19 @@ export const StyledField = ({
 }: StyledFieldProps) => {
     const focusRef = useRef<FocusableElement | null>(null);
 
+    const field = useTextField({ name });
+
     useEffect(() => {
         if (autoFocus) focusRef.current?.focus();
     }, [autoFocus]);
 
-    return (
-        <Field name={name}>
-            {({ field }: FieldProps) =>
-                multiline ? (
-                    <Textarea
-                        ref={focusRef as React.RefObject<HTMLTextAreaElement>}
-                        {...field}
-                    />
-                ) : (
-                    <Input
-                        ref={focusRef as React.RefObject<HTMLInputElement>}
-                        {...field}
-                    />
-                )
-            }
-        </Field>
+    return multiline ? (
+        <Textarea
+            ref={focusRef as React.RefObject<HTMLTextAreaElement>}
+            // FIXME fix types
+            {...(field as unknown as TextareaProps)}
+        />
+    ) : (
+        <Input ref={focusRef as React.RefObject<HTMLInputElement>} {...field} />
     );
 };
