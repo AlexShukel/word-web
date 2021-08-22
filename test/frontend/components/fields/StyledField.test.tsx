@@ -14,10 +14,13 @@ describe("StyledField", () => {
         const wrapper = mountStyledField();
 
         expect(wrapper.find("input").length).toBe(1);
+        expect(wrapper.find("input").prop("value")).toBe("hello");
     });
 
-    it("should autofocus on ComponentDidMount", async () => {
-        // const wrapper = mountStyledField({ autoFocus: true });
-        // TODO test input focus on useEffect
+    it("should render textarea", () => {
+        const wrapper = mountStyledField({ multiline: true });
+
+        expect(wrapper.find("textarea").length).toBe(1);
+        expect(wrapper.find("textarea").prop("value")).toBe("hello");
     });
 });

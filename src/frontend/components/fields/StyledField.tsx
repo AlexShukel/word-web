@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { Input, Textarea, TextareaProps } from "@chakra-ui/react";
 import { useTextField } from "@reactive-forms/dom";
 
+import { useAutoFocus } from "../../hooks/useAutoFocus";
 import { FocusableElement } from "../../types/FocusableElement";
 
 export type StyledFieldProps = {
@@ -20,9 +21,7 @@ export const StyledField = ({
 
     const field = useTextField({ name });
 
-    useEffect(() => {
-        if (autoFocus) focusRef.current?.focus();
-    }, [autoFocus]);
+    useAutoFocus(focusRef, autoFocus);
 
     return multiline ? (
         <Textarea
