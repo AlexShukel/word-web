@@ -6,7 +6,7 @@ import { domPlugin } from "@reactive-forms/dom";
 
 import { WordWebForm } from "./forms/WordWebForm";
 import { FormPopup } from "./popups/FormPopup";
-import { WordsContextLoader } from "./WordsContext";
+import { WordsContextController } from "./WordsContext";
 import { WordDef } from "../../shared/WordDef";
 import { theme } from "../theme";
 
@@ -16,7 +16,7 @@ export const App = () => {
     return (
         <FormPlugins plugins={plugins}>
             <ChakraProvider theme={extendTheme(theme)}>
-                <WordsContextLoader>
+                <WordsContextController>
                     <div>
                         <FormPopup<WordDef>
                             initialValues={{
@@ -40,7 +40,7 @@ export const App = () => {
                             <WordWebForm />
                         </FormPopup>
                     </div>
-                </WordsContextLoader>
+                </WordsContextController>
             </ChakraProvider>
         </FormPlugins>
     );

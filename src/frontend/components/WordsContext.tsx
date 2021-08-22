@@ -1,32 +1,24 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext } from "react";
 
-import { AppData } from "../../shared/AppData";
+import { useWordsController } from "../hooks/useWordsController";
+import { WordsController } from "../types/WordsController";
 
-type WordsContextType = AppData;
-
-export const WordsContext = createContext<WordsContextType | undefined>(
+export const WordsContext = createContext<WordsController | undefined>(
     undefined
 );
 
-type WordsContextLoaderProps = {
+type WordsContextControllerProps = {
     children: React.ReactNode;
 };
 
-export const WordsContextLoader = ({ children }: WordsContextLoaderProps) => {
-    const [data, setData] = useState<AppData | undefined>();
-
-    // TODO create a function to get data from electron
-    useEffect(() => {
-        setData({ words: [] });
-    }, []);
+export const WordsContextController = ({
+    children,
+}: WordsContextControllerProps) => {
+    const wordsController = useWordsController();
 
     return (
-        <React.Fragment>
-            {data && (
-                <WordsContext.Provider value={data}>
-                    {children}
-                </WordsContext.Provider>
-            )}
-        </React.Fragment>
+        <WordsContext.Provider value={wordsController}>
+            {children}
+        </WordsContext.Provider>
     );
 };
