@@ -17,4 +17,22 @@ describe("GridLabel", () => {
         expect(wrapper.find("div").at(0).text()).toBe("TEST LABEL: ");
         expect(wrapper.find("div").at(1).text()).toBe("Hello");
     });
+
+    it("should pass alignItems css property from props", () => {
+        const wrapper = mount(
+            <GridLabel label="Test label" placement="bottom">
+                Hello
+            </GridLabel>
+        );
+
+        const domNode = wrapper.find("div").at(0).getDOMNode();
+        expect(getComputedStyle(domNode).alignItems).toBe("flex-end");
+    });
+
+    it("label should be centered by default", () => {
+        const wrapper = mount(<GridLabel label="Test label">Hello</GridLabel>);
+
+        const domNode = wrapper.find("div").at(0).getDOMNode();
+        expect(getComputedStyle(domNode).alignItems).toBe("center");
+    });
 });
