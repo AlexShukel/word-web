@@ -2,5 +2,5 @@
 module.exports = {
     preset: "ts-jest",
     testEnvironment: "jsdom",
-    setupFiles: ["E:\\projects\\word-web\\test\\configureEnzyme.js"],
+    setupFiles: [`${__dirname}/test/configureEnzyme.js`],
 };
