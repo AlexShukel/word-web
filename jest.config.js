@@ -3,4 +3,5 @@ module.exports = {
     preset: "ts-jest",
     testEnvironment: "jsdom",
     setupFiles: [`${__dirname}/test/configureEnzyme.js`],
+    coverageReporters: ["text"],
 };
