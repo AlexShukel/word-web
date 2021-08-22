@@ -1,29 +1,15 @@
 import React from "react";
 import { act } from "react-dom/test-utils";
 
-import ReactiveForm, {
-    createPluginArray,
-    FormPlugins,
-} from "@reactive-forms/core";
-import { domPlugin } from "@reactive-forms/dom";
-import { mount } from "enzyme";
-
 import { ArrayField } from "../../../../src/frontend/components/fields/ArrayField";
+import { mountForm } from "../../mountForm";
 
-const plugins = createPluginArray(domPlugin);
-
-const mountForm = () =>
-    mount(
-        <FormPlugins plugins={plugins}>
-            <ReactiveForm initialValues={{ test: ["one", "two", "three"] }}>
-                {() => <ArrayField name="test" />}
-            </ReactiveForm>
-        </FormPlugins>
-    );
+const mountArrayField = () =>
+    mountForm({ test: ["one", "two", "three"] }, <ArrayField name="test" />);
 
 describe("ArrayField", () => {
     it("should render fields and buttons", () => {
-        const wrapper = mountForm();
+        const wrapper = mountArrayField();
 
         expect(wrapper.find("input").length).toBe(3);
         expect(wrapper.find("button").length).toBe(4);
@@ -32,7 +18,7 @@ describe("ArrayField", () => {
     });
 
     it("should add elements", async () => {
-        const wrapper = mountForm();
+        const wrapper = mountArrayField();
 
         await act(async () => {
             await wrapper.find("button").last().simulate("click");
@@ -44,7 +30,7 @@ describe("ArrayField", () => {
     });
 
     it("should remove elements", async () => {
-        const wrapper = mountForm();
+        const wrapper = mountArrayField();
 
         expect(wrapper.find("input").at(1).prop("value")).toBe("two");
 

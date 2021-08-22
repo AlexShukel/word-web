@@ -5,7 +5,7 @@ import { useTextField } from "@reactive-forms/dom";
 
 import { FocusableElement } from "../../types/FocusableElement";
 
-type StyledFieldProps = {
+export type StyledFieldProps = {
     name: string;
     multiline?: boolean;
     autoFocus?: boolean;
