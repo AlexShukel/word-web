@@ -27,6 +27,7 @@ export const ArrayField = ({ name }: ArrayFieldProps) => {
                                     colorScheme="red"
                                     variant="outline"
                                     aria-label="Delete item"
+                                    tabIndex={-1}
                                     icon={<DeleteIcon />}
                                     onClick={() => {
                                         removeAt(index);
