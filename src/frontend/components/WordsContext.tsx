@@ -1,5 +1,7 @@
 import React, { createContext } from "react";
 
+import { Progress } from "@chakra-ui/react";
+
 import { useWordsController } from "../hooks/useWordsController";
 import { WordsController } from "../types/WordsController";
 
@@ -16,9 +18,11 @@ export const WordsContextController = ({
 }: WordsContextControllerProps) => {
     const wordsController = useWordsController();
 
-    return (
+    return wordsController ? (
         <WordsContext.Provider value={wordsController}>
             {children}
         </WordsContext.Provider>
+    ) : (
+        <Progress size="xs" isIndeterminate />
     );
 };

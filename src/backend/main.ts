@@ -7,12 +7,14 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import { AppData } from "../shared/AppData";
 
 const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
 let win: BrowserWindow | null = null;
 const createWindow = () => {
     win = new BrowserWindow({
         webPreferences: {
             preload: join(__dirname, "./preload.js"),
+            contextIsolation: true,
         },
     });
 
@@ -35,8 +37,16 @@ app.on("ready", () => {
     });
 
     ipcMain.handle("getData", async () => {
-        const result = await readFile(resolve(__dirname, "hello-test.json"));
-        return JSON.parse(result.toString());
+        const path = resolve(__dirname, "hello-test.json");
+        let result: AppData = { words: [] };
+
+        if (fs.existsSync(path)) {
+            result = JSON.parse((await readFile(path)).toString());
+        } else {
+            await writeFile(path, JSON.stringify(result));
+        }
+
+        return result;
     });
 
     createWindow();
