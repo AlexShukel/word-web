@@ -4,8 +4,12 @@ import { AppData } from "../../shared/AppData";
 import { WordDef } from "../../shared/WordDef";
 import { WordsController } from "../types/WordsController";
 
-export const useWordsController = (): WordsController => {
-    const [data, setData] = useState<AppData | undefined>();
+const defaultData: AppData = {
+    words: [],
+};
+
+export const useWordsController = (): WordsController | null => {
+    const [data, setData] = useState<AppData | undefined>(undefined);
 
     const addWordDef = useCallback((wordDef: WordDef) => {
         setData((values = { words: [] }) => {
@@ -27,12 +31,14 @@ export const useWordsController = (): WordsController => {
     }, []);
 
     useEffect(() => {
-        window.api.getData().then((value) => setData(value ?? { words: [] }));
+        window.api.getData().then((value) => setData(value ?? defaultData));
     }, []);
 
-    return {
-        addWordDef,
-        removeWordDef,
-        appData: data,
-    };
+    return data
+        ? {
+              addWordDef,
+              removeWordDef,
+              appData: data,
+          }
+        : null;
 };
