@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 import { Input, Textarea, TextareaProps } from "@chakra-ui/react";
 import { useTextField } from "@reactive-forms/dom";
