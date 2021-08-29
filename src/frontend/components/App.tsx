@@ -1,25 +1,41 @@
 import React from "react";
 
-import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import { createPluginArray, FormPlugins } from "@reactive-forms/core";
-import { domPlugin } from "@reactive-forms/dom";
+import { Button } from "@chakra-ui/react";
 
-import { NewWordDefButton } from "./NewWordDefButton";
-import { WordsContextController } from "./WordsContext";
-import { theme } from "../theme";
-
-const plugins = createPluginArray(domPlugin);
+import { WordWebForm } from "./forms/WordWebForm";
+import { Popup } from "./Popup";
+import { useFormPopup } from "../hooks/useFormPopup";
+import { useWordsContext } from "../hooks/useWordsContext";
+import { getUniqueId } from "../utils/getUniqueId";
 
 export const App = () => {
+    const {
+        appData: { words },
+    } = useWordsContext();
+
+    const { open } = useFormPopup({
+        children: <WordWebForm />,
+        title: "Word-Web component form",
+        initialValues: {
+            id: getUniqueId(words),
+            word: "",
+            definition: "",
+            synonyms: [],
+            antonyms: [],
+            idioms: [],
+        },
+        onSubmit: () => {
+            // TODO
+        },
+    });
+
     return (
-        <FormPlugins plugins={plugins}>
-            <ChakraProvider theme={extendTheme(theme)}>
-                <WordsContextController>
-                    <div>
-                        <NewWordDefButton />
-                    </div>
-                </WordsContextController>
-            </ChakraProvider>
-        </FormPlugins>
+        <React.Fragment>
+            <div>
+                <Button onClick={open}>ADD NEW WORD-WEB</Button>
+            </div>
+
+            <Popup />
+        </React.Fragment>
     );
 };
