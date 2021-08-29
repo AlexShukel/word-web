@@ -19,8 +19,5 @@ export const usePopup = (popup: PopupConfig) => {
         onClose();
     }, [setPopup, onClose]);
 
-    return {
-        open,
-        close,
-    };
+    return [open, close];
 };

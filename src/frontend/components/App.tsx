@@ -13,7 +13,7 @@ export const App = () => {
         appData: { words },
     } = useWordsContext();
 
-    const { open } = useFormPopup({
+    const [openForm] = useFormPopup({
         children: <WordWebForm />,
         title: "Word-Web component form",
         initialValues: {
@@ -32,7 +32,7 @@ export const App = () => {
     return (
         <React.Fragment>
             <div>
-                <Button onClick={open}>ADD NEW WORD-WEB</Button>
+                <Button onClick={openForm}>ADD NEW WORD-WEB</Button>
             </div>
 
             <Popup />
