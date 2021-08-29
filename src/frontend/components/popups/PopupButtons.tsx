@@ -2,7 +2,7 @@ import React from "react";
 
 import { Button, ButtonGroup } from "@chakra-ui/react";
 
-import { useChakraPopupContext } from "./ChakraPopupContext";
+import { usePopupsContext } from "../../hooks/usePopupsContext";
 import { PopupButton } from "../../types/PopupButton";
 
 type PopupButtonsProps = {
@@ -10,7 +10,7 @@ type PopupButtonsProps = {
 };
 
 export const PopupButtons = ({ buttons }: PopupButtonsProps) => {
-    const { onClose } = useChakraPopupContext();
+    const { disclosure } = usePopupsContext();
 
     return (
         <ButtonGroup>
@@ -20,7 +20,7 @@ export const PopupButtons = ({ buttons }: PopupButtonsProps) => {
                         key={index}
                         onClick={(e) => {
                             if (onClick) onClick(e);
-                            if (closeOnClick) onClose();
+                            if (closeOnClick) disclosure.onClose();
                         }}
                         {...other}
                     >

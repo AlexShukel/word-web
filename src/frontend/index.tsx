@@ -8,7 +8,7 @@ import { domPlugin } from "@reactive-forms/dom";
 import "./global.g.scss";
 
 import { App } from "./components/App";
-import { PopupsContextController } from "./components/popups/PopupsContext";
+import { PopupsController } from "./components/popups/PopupsContext";
 import { WordsContextController } from "./components/WordsContext";
 import { theme } from "./theme";
 import { Api } from "../shared/Api";
@@ -24,11 +24,11 @@ const plugins = createPluginArray(domPlugin);
 render(
     <FormPlugins plugins={plugins}>
         <ChakraProvider theme={extendTheme(theme)}>
-            <PopupsContextController>
+            <PopupsController>
                 <WordsContextController>
                     <App />
                 </WordsContextController>
-            </PopupsContextController>
+            </PopupsController>
         </ChakraProvider>
     </FormPlugins>,
     document.getElementById("root")
